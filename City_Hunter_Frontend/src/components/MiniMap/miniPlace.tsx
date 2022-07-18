@@ -1,0 +1,62 @@
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+} from "use-places-autocomplete";
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxPopover,
+    ComboboxList,
+    ComboboxOption,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+import { useEffect } from "react";
+import { useJsApiLoader } from "@react-google-maps/api";
+
+type miniPlacesProps = {
+    setOffice: (position: google.maps.LatLngLiteral) => void;
+};
+
+export default function miniPlace({ setOffice }: miniPlacesProps) {
+    const {
+        ready,
+        value,
+        setValue,
+        suggestions: { status, data },
+        clearSuggestions
+    } = usePlacesAutocomplete();
+
+    const handleSelect = async (val: string) => {
+        setValue(val, false);
+        clearSuggestions();
+
+        const results = await getGeocode({ address: val });
+        const { lat, lng } = await getLatLng(results[0]);
+        setOffice({ lat, lng });
+    };
+
+    useEffect(() => {
+        console.log("useEffect")
+        // console.log(suggestions)
+    }, [])
+
+    return (
+        <Combobox onSelect={handleSelect}>
+            <ComboboxInput
+                value={value}
+                onChange={(e: { target: { value: string; }; }) => setValue(e.target.value)}
+                disabled={!ready}
+                className="combobox-input"
+                placeholder="Search office address"
+            />
+            <ComboboxPopover>
+                <ComboboxList>
+                    {status === "OK" &&
+                        data.map(({ place_id, description }) => (
+                            <ComboboxOption key={place_id} value={description} />
+                        ))}
+                </ComboboxList>
+            </ComboboxPopover>
+        </Combobox>
+    );
+}

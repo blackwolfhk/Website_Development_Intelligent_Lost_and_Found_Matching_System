@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  city_hunter:
+    image: "veronica528/city-hunter:latest"
+    # environment:
+    #   NODE_ENV: "production"
+    env_file:
+      - .env.docker
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  postgres:
+    image: "postgres:13"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: city_hunter
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

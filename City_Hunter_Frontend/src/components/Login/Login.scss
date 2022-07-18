@@ -1,0 +1,122 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  background-image: url("../../assets/logo.png"), url("../../assets/logo.png");
+  background-size: auto;
+  height: 100vh;
+  padding: 5% 0;
+}
+
+.wrapper {
+  padding: 15px;
+  width: clamp(350px, 70vw, 900px);
+  min-height: 65vh;
+  -webkit-box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);
+  box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);
+  border-radius: 20px;
+  background-color: aliceblue;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px !important;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px !important;
+}
+
+.center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 30px;
+
+}
+
+.or {
+  border: 2px solid lightgray;
+  border-radius: 50%;
+  padding: 10px;
+  color: gray;
+  background-color: white;
+  font-weight: bold;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 15px 25px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.google {
+  background-color: #df4930;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+
+input {
+  width: 200px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+}
+
+.submit {
+  width: 200px;
+  background-color: rgba(34, 27, 73, 0.671);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.submit:hover {
+  cursor: pointer;
+  background-color: rgb(7, 13, 13);
+  transition: all 0.4s ease-out;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.loginTitle {
+  padding-left: 45px;
+  color: rgb(130, 111, 134);
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.registerHere {
+  font-size: 0.8rem;
+  margin-top: 10% !important;
+  color: rgb(4, 21, 13);
+  text-align: center;
+}
+
+.registerHere a {
+  text-decoration: none;
+  color: #e410e0;
+  font-weight: 800;
+}

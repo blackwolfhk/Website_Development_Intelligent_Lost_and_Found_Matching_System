@@ -1,0 +1,123 @@
+.header {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  position: -webkit-sticky;
+  position: sticky;
+  /* background-color: darkslategray; */
+  z-index: 100;
+  top: 0;
+  box-shadow: 0px 5px 8px -9px rbga(0, 0, 0, 0.75);
+  background-image: url("background2.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header_left {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.header_input {
+  display: flex;
+  align-items: center;
+  background-color: #eff2f5;
+  padding: 10px;
+  margin-left: 10px;
+  border-radius: 999px;
+  height: 48px;
+}
+
+.header_left > img {
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.header_company_name {
+  color: white;
+  font-size: 16px;
+  font-family: cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.header_input > input {
+  border: none;
+  background-color: transparent;
+  outline-width: 0;
+}
+
+.header_center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.header_option > .MuiSvgIcon-root {
+  color: gray;
+  height: 30px;
+}
+
+.Header_option--active > .MuiSvgIcon-root {
+  color: #bf9454;
+  height: 30px;
+}
+
+.Header_option--active {
+  border-bottom: 3px solid #bf9454;
+}
+
+.header_option:hover > .MuiSvgIcon-root {
+  color: #bf9454;
+  height: 30px;
+}
+
+.header_option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 25px;
+  cursor: pointer;
+}
+
+.header_option:hover {
+  background-color: #eff2f5;
+  border-radius: 10px;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: none;
+  /* border-bottom: 3px solid #bf9454; */
+}
+
+.header_info {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.username {
+  margin-left: 10px;
+  display: flex;
+  color: #bf9454;
+  font-size: 18px;
+}
+
+.header_right {
+  display: flex;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.font-setting {
+  color: #bf9454;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+a:link {
+  text-decoration: none;
+}

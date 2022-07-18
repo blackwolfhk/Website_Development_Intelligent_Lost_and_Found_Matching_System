@@ -1,0 +1,15 @@
+// Running Migration:
+yarn knex migrate:latest
+
+// Rolling Back migration:
+yarn knex migrate:rollback
+
+// Run only one migration instead of all of the new migrations in a batch:
+yarn knex migrate:up
+
+// Rollback only one migration instead of all of the migration in the previous batch:
+yarn knex migrate:down
+
+
+
+yarn knex seed:run

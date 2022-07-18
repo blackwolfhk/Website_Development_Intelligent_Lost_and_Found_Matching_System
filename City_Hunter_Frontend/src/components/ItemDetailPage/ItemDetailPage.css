@@ -1,0 +1,87 @@
+.lostDetailBackground {
+    width: 100%;
+    padding: 0px;
+    background-image: url("background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    color: #bf9454;
+}
+.topic{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: monospace;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+.lostItemBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* flex-wrap: wrap; */
+}
+.lostImage{
+    background:white;
+    /* margin: 30px; */
+    /* margin-left: 100px; */
+    width:800px;
+    height: 800px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.lostDetail{
+    /* background-color: black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width:800px;
+    height: 800px;
+    font-size: 2rem;
+}
+
+.googleMap{
+    margin: 10px;
+    margin-left: 100px;
+    width: 70vw;
+    height: 30vh;
+    background-color: white;
+    color: black;
+    
+}
+.chatroom{
+    margin: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70vw;
+    height: 40vh;
+    background-color: white;
+    color: black;
+    
+}
+.chatroomContent{
+    margin-left: 10px;
+    width: 65vw;
+    height: 30vh;
+    background-color: rgb(209, 32, 32);
+}
+@media only screen and (max-width: 600px) {
+    .lostDetailBackground {
+        background: aqua;
+    }
+    
+}

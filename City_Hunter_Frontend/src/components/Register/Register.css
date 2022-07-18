@@ -1,0 +1,110 @@
+.main-Register {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  background-image: url("../../assets/logo.png"), url("../../assets/logo.png");
+  background-size: auto;
+  padding: 5% 0;
+}
+
+.main-Register .right-side {
+  -webkit-box-flex: 0.4;
+  -ms-flex: 0.4;
+  flex: 0.4;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  background-color: rgb(13, 14, 12);
+}
+
+.main-Register .right-side .top-right {
+  float: right;
+  margin-right: 2rem;
+  font-size: 20px;
+  text-decoration: none;
+  margin-left: .3rem;
+  cursor: pointer;
+  color: rgb(243, 31, 208);
+}
+
+.main-Register .right-side .body-right {
+  height: 100%;
+  width: 100%;
+}
+
+.main-Register .right-side .body-right .container {
+  height: 90%;
+  width: 90%;
+  margin: 2rem auto;
+  padding-top: 2rem;
+  box-shadow: 0rem 0rem 2rem 0.1rem #c03ce8;
+  border-radius: 0.5rem;
+  background-color: #fff;
+}
+
+.main-Register .right-side .body-right .container .input-group {
+  width: 100%;
+  position: relative;
+}
+
+.main-Register .right-side .body-right .container .input-group h5 {
+  font-size: 17px;
+  font-weight: 300;
+  color: rgb(28, 15, 15);
+  position: absolute;
+  left: 10%;
+  top: 0;
+  margin: 0.5rem auto;
+  background: white;
+}
+
+.main-Register .right-side .body-right .container .input-group input {
+  margin: 1.2rem auto;
+  width: 60%;
+  border: none;
+  padding: 0.5rem 0.5rem;
+  -webkit-box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem gray;
+  box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem gray;
+}
+
+.main-Register .right-side .body-right .container .input-group input:focus {
+  outline: none;
+}
+
+.main-Register .right-side .body-right #sbtn {
+  width: 60%;
+  background: #ae0c98;
+  color: white;
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem 2.5rem;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.main-Register .right-side .body-right #sbtn:hover {
+  -webkit-box-shadow: 0.5rem 0.5rem 1rem 0.1rem gray;
+  box-shadow: 0.5rem 0.5rem 1rem 0.1rem gray;
+}
+
+.error {
+  color: red;
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 15px;
+}

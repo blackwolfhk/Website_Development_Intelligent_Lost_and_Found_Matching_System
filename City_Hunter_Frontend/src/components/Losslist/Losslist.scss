@@ -1,0 +1,134 @@
+// /* .outside-container {
+//   display: flex;
+// } */
+
+// .loss_items {
+//     width: 100%;
+//     padding: 40px;
+//     // background-image: url("background.jpeg");
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     min-height: 100vh;
+//     color: #bf9454;
+//   }
+  
+//   .loss_items > h1 {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-family: monospace;
+//     font-weight: bold;
+//     margin-top: 4px;
+//   }
+  
+//   .box-container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+  
+//   .box {
+//     /* display: inline-block; */
+//     padding: 1%;
+//     background-color: lightgrey;
+//     min-height: 13rem;
+//     min-width: 13rem;
+//     box-shadow: 3px 6px 20px 2px darkcyan;
+//   }
+  
+//   .itemdetailbox {
+//     position: relative;
+  
+//     .top-label {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       background-color: black;
+//       color: white;
+//       font-weight: bold;
+//       padding: 0.2rem;
+//     }
+//     img {
+//       height: auto;
+//       width: 100%;
+//     }
+//     /* position: relative; */
+//     /* top: 2%;
+//     left: 50%; */
+//     /* transform: translate(-50%, -50%); */
+//   }
+  
+//   .itemdetailcontext {
+//     font-size: 12px;
+//     color: black;
+//   }
+  
+//   .status,
+//   .districts {
+//     font-weight: bold;
+//   }
+  
+//   .select-button {
+//     padding: 5px;
+//   }
+  
+//   .filterbuttons {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+  
+//   .create-lost-button,
+//   .create-found-button {
+//     display: inline-block;
+//     outline: 0;
+//     cursor: pointer;
+//     text-align: center;
+//     border: 0;
+//     padding: 7px 16px;
+//     min-height: 36px;
+//     min-width: 36px;
+//     color: #bf9454;
+//     background: #1a2904;
+//     border-radius: 4px;
+//     font-weight: 500;
+//     font-size: 14px;
+//     font-weight: bold;
+//     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+//       rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+//   }
+//   .create-lost-button:hover,
+//   .create-found-button:hover {
+//     background: #006e52;
+//     color: #bf9454;
+//   }
+// .itemdetailcontext{
+//     font-size: larger;
+//     display: flex;
+//     // justify-content: center;
+//     align-items: center;
+//     font-family: monospace;
+//     // font-weight: bold;
+// }
+.itemdetailbox {
+    position: relative;
+    font-size: larger;
+    
+    .top-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: black;
+      color: white;
+      font-weight: bold;
+      padding: 0.2rem;
+    }
+    img {
+      height: 80%;
+      width: 100%;
+    }
+    /* position: relative; */
+    /* top: 2%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+  }

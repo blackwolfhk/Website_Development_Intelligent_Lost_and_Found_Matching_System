@@ -1,0 +1,19 @@
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+docker exec -it postgres psql -U postgres
+
+
+docker run --name basic-postgres --rm -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e PGDATA=/var/lib/postgresql/data/pgdata 
+-v /tmp:/var/lib/postgresql/data -p 5432:5432 -it postgres:14.1-alpine
+
+docker tag <your-local-image-tag>:<tagname>  <your-account-name>/<your-repo-name>:<tagname>  
+docker tag city-hunter:latest  veronica528/city-hunter:latest  
+
+docker push <your-account-name>/<your-repo-name>:<tagname>
+docker push veronica528/city-hunter:latest  
+
+Token
+docker login -u veronica528
+password: 123456789
+3b95d26d-25c4-44dd-a738-a24e3ffa51f4
+
+docker pull veronica528/city-hunter:latest
