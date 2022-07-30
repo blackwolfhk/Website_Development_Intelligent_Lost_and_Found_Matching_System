@@ -4,12 +4,10 @@ import "./LossItem.scss";
 import "bootstrap/dist/css/bootstrap.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Container } from "react-bootstrap";
-import background from "../../assets/background.jpeg";
-import { Link, Route, Routes } from "react-router-dom";
+import { Button, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { getPostThunk } from "../../redux/post/thunks";
 import { IRootState } from "../../redux/state";
-import { IPostState } from "../../redux/post/state";
 import Losslist from "../Losslist/Losslist";
 import Carousel from "react-bootstrap/Carousel";
 import banner1 from "../../assets/banner1.png";
@@ -18,188 +16,189 @@ import banner3 from "../../assets/banner3.png";
 
 export default function LossItem() {
   const dispatch = useDispatch();
-  // const[lostItem , setLostItem] = useState('')
-  const name = useSelector((state: IRootState) => state.post?.posts[0]?.name);
-  const location = useSelector(
-    (state: IRootState) => state.post?.posts[0]?.lost_address
-  );
-  const date = useSelector((state: IRootState) => state.post?.posts[0]?.date);
   const posts = useSelector((state: IRootState) => state.post?.posts);
 
-  // const loopPosts:any()=>{
-  // const posts = useSelector((state:IRootState)=> state.post?.posts);
-  // console.log("posts1",posts)
-  // for(let post of posts){
-  //   console.log(post)
+  const [status, setStatus] = useState("");
+  const [price, setPrice] = useState("");
+  const [districts, setDistricts] = useState("");
 
-  // }
-  //   useEffect(()=>{
-  //     dispatch(getPostThunk("123"))
-
-  //   }, [])
-  // }
-  // const posts = useSelector((state:IRootState)=> state.post?.posts);
-  // console.log("posts",posts)
-  // for(let post of posts){
-  //   console.log(post)
-
-  // }
+  const search = async () => {
+    const result = await dispatch(
+      getPostThunk({
+        status: status,
+        price: price,
+        districts: districts,
+      })
+    ).unwrap();
+    console.log(result);
+  };
 
   useEffect(() => {
-    console.log("useEffect");
-    dispatch(getPostThunk("123"));
-    //   const getPost = async () => {
-    //     await dispatch(
-    //       getPost({
-
-    //       })
-    //     )
-    //   }
+    search();
   }, []);
   return (
     <div className="loss_items">
       <Carousel>
         <Carousel.Item interval={1000}>
           <img className="d-block w-100" src={banner1} alt="First slide" />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-          </Carousel.Caption>
+          <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item interval={500}>
           <img className="d-block w-100" src={banner2} alt="Second slide" />
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
+          <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <img className="d-block w-100" src={banner3} alt="Third slide" />
           <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
+            <h6>We can help to find your lost item</h6>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
 
-      <h1>Lost items</h1>
-      <form action="/action_page.php" className="filterbuttons">
-        <span className="status select-button">
-          <label htmlFor="status">Status: &nbsp;</label>
-          <select name="districts" id="districts">
-            <option value="All">All</option>
-            <option value="LostItems">Lost</option>
-            <option value="FoundItems">Found</option>
-          </select>
-        </span>
-        <span className="districts select-button">
-          <label htmlFor="districts">Districts: &nbsp;</label>
-          <select name="districts" id="districts">
-            <option value="All">All</option>
-            <option value="Islands">Islands</option>
-            <option value="KwaiTsing">Kwai Tsing</option>
-            <option value="North">North</option>
-            <option value="SaiKung">Sai Kung</option>
-            <option value="ShaTin">Sha Tin</option>
-            <option value="TaiPo">Tai Po</option>
-            <option value="TsuenWan">Tsuen Wan</option>
-            <option value="TuenMun">Tuen Mun</option>
-            <option value="YuenLong">Yuen Long</option>
-            <option value="KowloonCity">Kowloon City</option>
-            <option value="KwunTong">Kwun Tong</option>
-            <option value="ShamShuiPo">Sham Shui Po</option>
-            <option value="WongTaiSin">Wong Tai Sin</option>
-            <option value="YauTsimMong">Yau Tsim Mong</option>
-            <option value="CentralandWestern">Central and Western</option>
-            <option value="Eastern">Eastern</option>
-            <option value="Southern">Southern</option>
-            <option value="WanChai">Wan Chai</option>
-          </select>
-        </span>
-        &nbsp;&nbsp;
-        <div className="create-lost-button">
-          <Link to="/main/createlostpost">Create Lost Post</Link>
-        </div>
-        &nbsp;&nbsp;
-        <div className="create-found-button">Create Found Post</div>
-      </form>
+      <br></br>
 
+      <h1>Lost items</h1>
+
+      <br></br>
+
+      <Container fluid>
+        <Row>
+          <Col>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button variant="warning" size="lg">
+                <Link
+                  to="/main/createlostpost"
+                  style={{
+                    display: "inline-block",
+                    outline: 0,
+                    cursor: "pointer",
+                    border: "0",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  *Create Lost Post*
+                </Link>
+              </Button>{" "}
+            </div>
+          </Col>
+        </Row>
+      </Container>
+
+      <br></br>
+
+      <Container fluid>
+        <form action="/action_page.php" className="filterbuttons">
+          <Row style={{ alignItems: "center", justifyContent: "center" }}>
+            <Col md={6} lg={3}>
+              <div
+                className="status select-button"
+                style={{ margin: "1.2rem 0" }}
+              >
+                <label htmlFor="status">Status: &nbsp;</label>
+                {/* <input type="text" onChange={handleSearch}></input> */}
+                <select
+                  style={{ minWidth: "140px" }}
+                  title="status"
+                  value={status}
+                  name="districts"
+                  id="districts"
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  <option value="0">All</option>
+                  <option value="1">Lost</option>
+                  <option value="2">Found</option>
+                </select>
+                {/* filteredStatus={filteredStatus} */}
+              </div>
+            </Col>
+            <Col md={6} lg={3}>
+              <div
+                className="status select-button"
+                style={{ margin: "1.2rem 0" }}
+              >
+                <label htmlFor="status">Price: &nbsp;</label>
+                <select
+                  title="price"
+                  value={price}
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                  name="price"
+                  id="price"
+                >
+                  <option value="0">All</option>
+                  <option value="1">Below HK$500</option>
+                  <option value="2">HK$501 to HK$1,000</option>
+                  <option value="3">HK$1,001 to HK$3,000</option>
+                  <option value="4">Above HK$3,000</option>
+                </select>
+              </div>
+            </Col>
+            <Col md={6} lg={3}>
+              <div
+                className="districts select-button"
+                style={{ margin: "1.2rem 0" }}
+              >
+                <label htmlFor="districts">Districts: &nbsp;</label>
+                <select
+                  name="districts"
+                  id="districts"
+                  value={districts}
+                  onChange={(e) => {
+                    setDistricts(e.target.value);
+                  }}
+                >
+                  <option value="0">All</option>
+                  <option value="1">Islands</option>
+                  <option value="2">Kwai Tsing</option>
+                  <option value="3">North</option>
+                  <option value="4">Sai Kung</option>
+                  <option value="5">Sha Tin</option>
+                  <option value="6">Tai Po</option>
+                  <option value="7">Tsuen Wan</option>
+                  <option value="8">Tuen Mun</option>
+                  <option value="9">Yuen Long</option>
+                  <option value="10">Kowloon City</option>
+                  <option value="11">Kwun Tong</option>
+                  <option value="12">Sham Shui Po</option>
+                  <option value="13">Wong Tai Sin</option>
+                  <option value="14">Yau Tsim Mong</option>
+                  <option value="15">Central and Western</option>
+                  <option value="16">Eastern</option>
+                  <option value="17">Southern</option>
+                  <option value="18">Wan Chai</option>
+                </select>
+              </div>
+            </Col>
+            <Col md={6} lg={3}>
+              <Button
+                variant="secondary"
+                onClick={search}
+                style={{ margin: "1.2rem 0" }}
+              >
+                Search
+              </Button>{" "}
+              {/* <div className="create-found-button">Create Found Post</div>
+              &nbsp;&nbsp; */}
+            </Col>
+          </Row>
+        </form>
+      </Container>
       <br></br>
       <div className="big-box-container">
-        {/* <Container> */}
-        {posts.map((post) => (
-          <Losslist post={post} />
+        {posts.map((post, index) => (
+          <Losslist key={index} post={post} />
         ))}
-
-        {/* </Container> */}
       </div>
-      {/* <Container>
-      <Row className="box-container">
-        <Col md={3} className="box itemdetailbox">
-          <Link to="/main/ItemDetailPage" className="">
-            <div className="top-label">Item 1</div>
-            <img
-              src="https://www.lostings.com/wp-content/uploads/2022/07/lost_starbucks_coffee_tumblr_collectors_items_starbucks_coffee_tumblr_692.jpg"
-              alt="Lost Starbucks Coffee Tumblr"
-            ></img>
-
-            <div className="itemdetailcontext">
-              <b>Lost item:</b>{name}
-            </div>
-            <div className="itemdetailcontext">
-              <b>Location:</b> {location}
-            </div>
-            <div className="itemdetailcontext">
-              <b>Lost date:</b> {date}
-            </div>
-          </Link>
-        </Col>
-
-        <Col md={1}></Col>
-        <Col md={3} className="box">
-          Item 2
-        </Col>
-        <Col md={1}></Col>
-        <Col md={3} className="box">
-          Item 3
-        </Col>
-      </Row>
-      <br></br>
-      <br></br>
-      <Row className="box-container">
-        <Col md={3} className="box">
-          Item 4
-        </Col>
-        <Col md={1}></Col>
-        <Col md={3} className="box">
-          Item 5
-        </Col>
-        <Col md={1}></Col>
-        <Col md={3} className="box">
-          Item 6
-        </Col>
-      </Row>
-      <br></br>
-      <br></br>
-      <Row className="box-container">
-        <Col md={3} className="box">
-          Item 7
-        </Col>
-        <Col md={1}></Col>
-        <Col md={3} className="box">
-          Item 8
-        </Col>
-        <Col md={1}></Col>
-        <Col md={3} className="box">
-          Item 9
-        </Col>
-      </Row>
-      <br></br>
-      <br></br> */}
-      {/*
-    </Container> */}
     </div>
   );
 }

@@ -22,16 +22,14 @@
 }
 
 .box-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    margin: 20px;
-    width: 350px;
-
-
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  margin: 20px;
+  width: 350px;
 }
 
 .box {
@@ -64,7 +62,8 @@
 }
 
 .itemdetailcontext {
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 500;
   color: black;
 }
 
@@ -83,7 +82,12 @@
   align-items: center;
 }
 
-.create-lost-button,
+// .create-lost-button {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
 .create-found-button {
   display: inline-block;
   outline: 0;
@@ -107,10 +111,16 @@
   background: #006e52;
   color: #bf9454;
 }
-.big-box-container{
+.big-box-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  
 }
+
+// .filterArea {
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   flex-wrap: wrap;
+// }

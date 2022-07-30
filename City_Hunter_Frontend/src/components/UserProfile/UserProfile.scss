@@ -19,3 +19,17 @@
   aspect-ratio: 1;
   border-radius: 100%;
 }
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+.about-us_box-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  margin: 20px;
+}

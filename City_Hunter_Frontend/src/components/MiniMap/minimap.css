@@ -1,0 +1,33 @@
+.nearby {
+    width: 100%;
+    padding: 30px;
+  }
+  
+  .nearby > h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  
+  .map-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* object-fit: fill; */
+  }
+  
+  .map-area > img {
+    width: 70rem;
+    height: 35rem;
+  }
+  .combobox-input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+  }

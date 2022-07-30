@@ -112,7 +112,8 @@
 // }
 .itemdetailbox {
     position: relative;
-    font-size: larger;
+    font-size: 20px;
+    padding: 1rem;
     
     .top-label {
       position: absolute;
@@ -124,8 +125,9 @@
       padding: 0.2rem;
     }
     img {
-      height: 80%;
-      width: 100%;
+      height: 260px;
+      width: 260px;
+
     }
     /* position: relative; */
     /* top: 2%;

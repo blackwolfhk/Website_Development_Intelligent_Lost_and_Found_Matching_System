@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+// import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 function Register() {
   // useState returns a stateful value, and a function to update it
@@ -39,23 +39,23 @@ function Register() {
   };
 
   // GoogleReCaptcha handling:
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  // const { executeRecaptcha } = useGoogleReCaptcha();
   // useCallback will return a memoized version of the callback that only changes
   // if one of the dependencies has changed.
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) {
-      console.log("Execute recaptcha not yet available");
-      return;
-    }
+  // const handleReCaptchaVerify = useCallback(async () => {
+  //   if (!executeRecaptcha) {
+  //     console.log("Execute recaptcha not yet available");
+  //     return;
+  //   }
 
-    const token = await executeRecaptcha("yourAction");
-    // Do whatever you want with the token
-  }, [executeRecaptcha]);
+  //   const token = await executeRecaptcha("yourAction");
+  //   // Do whatever you want with the token
+  // }, [executeRecaptcha]);
 
   // Use useEffect to trigger the verification as soon as the component being loaded
-  useEffect(() => {
-    handleReCaptchaVerify();
-  }, [handleReCaptchaVerify]);
+  // useEffect(() => {
+  //   handleReCaptchaVerify();
+  // }, [handleReCaptchaVerify]);
 
   return (
     <div className="main-Register">
@@ -136,7 +136,7 @@ function Register() {
                 Already have an Account?
                 <Link to="/login">Sign In</Link>
               </p>
-              <button onClick={handleReCaptchaVerify}>Verify recaptcha</button>
+              {/* <button onClick={handleReCaptchaVerify}>Verify recaptcha</button> */}
               <div className="error">
                 {errorMsg.length > 0 && <h5>Message: {errorMsg}</h5>}
               </div>

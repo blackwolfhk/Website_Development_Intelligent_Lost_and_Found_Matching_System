@@ -1,9 +1,6 @@
-import React from "react";
 import "./Login.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../../redux/auth/actions";
-import logo from "../../assets/logo.png";
 import { fbThunk, loginThunk, googleThunk } from "../../redux/auth/thunks";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../redux/state";
@@ -80,13 +77,24 @@ const Login = () => {
             >
               LOGIN WITH GOOGLE{" "}
             </button>
-            <ReactFacebookLogin
+
+            <button
+              className="loginButton "
+              style={{ backgroundColor: "blue" }}
+              // onClick={() => googleLogin()}
+            >
+              LOGIN WITH FACEBOOK{" "}
+            </button>
+
+            {/* <div className="facebookStyle"> */}
+            {/* <ReactFacebookLogin
               appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
               autoLoad={false}
               fields="name,email,picture"
               onClick={fBOnCLick}
               callback={fBCallback}
-            />
+            /> */}
+            {/* </div> */}
           </div>
 
           <div className="center col-lg-2">
@@ -110,6 +118,7 @@ const Login = () => {
                   <input
                     className="w-100"
                     value={password}
+                    type="password"
                     onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </label>

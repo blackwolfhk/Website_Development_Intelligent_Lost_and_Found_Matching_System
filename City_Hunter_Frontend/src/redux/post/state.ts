@@ -17,4 +17,7 @@ export interface PostState {
     userId:number;
     images_path:string;
     post_id:number;
+    latlngs_lat:number;
+    latlngs_lng:number;
+    mobile_no:string;
 }

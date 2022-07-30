@@ -14,7 +14,7 @@ export class UserRoutes {
     let controller = new UserController(service)
     userRoutes.post("/register", controller.register);
     userRoutes.post("/login", controller.login);
-    userRoutes.get("/me", controller.getMe);
+    // userRoutes.get("/me", controller.getMe);
     userRoutes.get("/logout", controller.logout);
     userRoutes.post("/login/google", controller.googleLogin);
     userRoutes.post("/login/fb", controller.fbLogin);

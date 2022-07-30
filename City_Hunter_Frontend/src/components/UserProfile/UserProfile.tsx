@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
 import "./UserProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../components/Loading/Loading";
-import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import MainScreen from "../MainScreen/MainScreen";
-import { error } from "console";
 import Stack from "react-bootstrap/Stack";
-import manimg from "../../assets/mentest.jpeg";
-import { Link, Route, Routes, useParams } from "react-router-dom";
 import { IRootState } from "../../redux/state";
 import { useForm } from "react-hook-form";
+import { updateProfile } from "../../redux/auth/thunks";
+import { useNavigate } from "react-router-dom";
 
 // interface UserProfileProps {
 //   profile: any;
@@ -26,13 +23,13 @@ interface FormType {
 }
 
 export default function UserProfile() {
-  const mobile_no = useSelector((state: IRootState) => state.auth.mobile_no);
-  const email = useSelector((state: IRootState) => state.auth.email);
-  const username = useSelector((state: IRootState) => state.auth.username);
-  const displayName = useSelector(
-    (state: IRootState) => state.auth.displayName
+  const { mobile_no, email, username, displayName } = useSelector(
+    (state: IRootState) => state.auth
   );
 
+  const [updateProfileError, setUpdateProfileError] = useState("");
+
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<FormType>({
     defaultValues: {
       username: username,
@@ -43,9 +40,16 @@ export default function UserProfile() {
       email: email,
     },
   });
-
-  const onSubmit = (data: FormType) => {
+  const navigate = useNavigate();
+  const onSubmit = async (data: FormType) => {
     console.log(JSON.stringify(data));
+    try {
+      await dispatch(updateProfile(data)).unwrap();
+      navigate(-1);
+    } catch (error: any) {
+      console.log(error);
+      setUpdateProfileError(error);
+    }
   };
   return (
     <MainScreen title="EDIT PROFILE">
@@ -142,7 +146,7 @@ export default function UserProfile() {
                 }}
               >
                 <img className="profile-img" src={manimg} alt="" />
-              </div> */}
+              </div>
               <br></br>
               <div
                 style={{
@@ -158,9 +162,10 @@ export default function UserProfile() {
                   value="Edit"
                   className="col-md-3 "
                 />
-              </div>
+              </div> */}
             </Col>
           </Row>
+          <div className="error-message">{updateProfileError}</div>
         </Container>
         {/* </Link> */}
         {/* <button>test</button>

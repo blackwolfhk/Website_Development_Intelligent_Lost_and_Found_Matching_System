@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { IAuthState, MyJwtPayload } from "./state";
-import { fbThunk, loginThunk, googleThunk } from "./thunks";
+import { fbThunk, loginThunk, googleThunk, updateProfile } from "./thunks";
 import jwtDecode from "jwt-decode";
 
 
@@ -15,7 +15,8 @@ const initialState = (): IAuthState => {
     }
 
     let token = localStorage.getItem("token");
-    if (token) {
+    // console.log(token)
+    if (token && isJson(token)) {
         const jwtPayload: MyJwtPayload = jwtDecode(token);
         data.username = jwtPayload.username
         data.displayName = jwtPayload.username
@@ -27,6 +28,15 @@ const initialState = (): IAuthState => {
     return data
 }
 
+function isJson(str: string) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
 const authReducer = createReducer(initialState(), (build) => {
     // success login handling
     build.addCase(loginThunk.fulfilled, (state, action) => {
@@ -34,15 +44,18 @@ const authReducer = createReducer(initialState(), (build) => {
     });
     // fail login handling
     build.addCase(loginThunk.rejected, (state, action) => {
-        handleToken(state, action)
+        state.isLoggedIn = false;
     });
+    build.addCase(updateProfile.fulfilled, (state, action) => {
+        handleToken(state, action)
+    })
     //success fb login handling:
     build.addCase(fbThunk.fulfilled, (state, action) => {
         handleToken(state, action)
     });
     //fail fb login handling:
     build.addCase(fbThunk.rejected, (state, action) => {
-        handleToken(state, action)
+        state.isLoggedIn = false;
     })
 
     build.addCase(googleThunk.fulfilled, (state, action) => {
@@ -50,7 +63,7 @@ const authReducer = createReducer(initialState(), (build) => {
     });
     //fail fb login handling:
     build.addCase(googleThunk.rejected, (state, action) => {
-        handleToken(state, action)
+        state.isLoggedIn = false;
     })
 })
 

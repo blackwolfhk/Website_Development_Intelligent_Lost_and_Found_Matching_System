@@ -41,7 +41,6 @@
   justify-content: center;
   position: relative;
   padding: 30px;
-
 }
 
 .or {
@@ -72,9 +71,8 @@
   background-color: #df4930;
   font-weight: bold;
   font-size: 18px;
+  border-radius: 0%;
 }
-
-
 
 input {
   width: 200px;
@@ -120,3 +118,9 @@ input {
   color: #e410e0;
   font-weight: 800;
 }
+
+// .login {
+//   .facebookStyle {
+//     border-radius: 999rem;
+//   }
+// }

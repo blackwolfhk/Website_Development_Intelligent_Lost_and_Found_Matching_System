@@ -12,45 +12,47 @@ export default class UserController {
   constructor(private userService: UserService) { }
 
   register = async (req: Request, res: Response) => {
-    let { username, password, mobileNo, email } = req.body;
-    const hashedPassword = await hashPassword(password);
-    const user = await this.userService.getUserByUsername(username);
-    const role_id = Number(await this.userService.getRoleID('user'));
-    console.log("role_id : ", role_id)
 
-    if (username.length < 5) {
-      res.status(400).json({ message: "username must be a least 5 characters" })
-      return
-    }
+    try {
+      let { username, password, mobileNo, email } = req.body;
+      const hashedPassword = await hashPassword(password);
+      const user = await this.userService.getUserByUsername(username);
+      const role_id = Number(await this.userService.getRoleID('user'));
+      console.log("role_id : ", role_id)
 
-    if (password.length < 8) {
-      res.status(400).json({ message: "password must be a least 8 characters" })
-      return
-    }
+      if (username.length < 5) {
+        res.status(400).json({ message: "username must be a least 5 characters" })
+        return
+      }
 
-    if (!user) {
-      await this.userService.register(
-        username,
-        hashedPassword,
-        mobileNo,
-        email,
-        role_id
-      );
-      res.json({
-        message: `${username} is create! `,
+      if (password.length < 8) {
+        res.status(400).json({ message: "password must be a least 8 characters" })
+        return
+      }
+
+      if (!user) {
+        await this.userService.register(
+          username,
+          hashedPassword,
+          mobileNo,
+          email,
+          role_id
+        );
+        let dbUser = await this.userService.getUserByUsername(username);
+        const token = this.genJwt(dbUser)
+        res.json({ token, message: `${username} is create! ` })
+        return
+      }
+      res.status(400).json({
+        message: `${username} is already existing! `,
       });
-      let dbUser = await this.userService.getUserByUsername(username);
-      const token = this.genJwt(dbUser)
-      return res.json({ token })
-
-
-
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: `Internal System error in registration`,
+      });
 
     }
-    res.status(400).json({
-      message: `${username} is already existing! `,
-    });
-    return
 
   };
 
@@ -85,72 +87,41 @@ export default class UserController {
   };
 
 
-  getMe = async (req: express.Request, res: express.Response) => {
-    // console.log("session id", req.session.id);
-    if (!req.session["user"]) {
-      console.log("NO LOGIN");
-      res.status(400).json({
-        message: "Login Not Yet",
-      });
-      return;
-    }
-
-    let id = req.session["user"].id;
-    let currentUserId = Number(id);
-    let currentUserData = await this.userService.getUserById(currentUserId);
-    res.json(currentUserData);
-  };
-
-
   logout = (req: express.Request, res: express.Response) => {
-    let username = req.session["username"];
-    console.log(`${username} want to logout`);
-    req.session.destroy((error) => {
-      if (error) {
-        console.error("failed to destroy session:", error);
-      }
 
-      res.redirect(`/index.html?user=${username}`);
-    });
   };
 
 
   googleLogin = async (req: Request, res: Response) => {
     try {
-      // const accessToken = req.session?.["grant"].response.access_token;
-
       const { accessToken } = req.body
       const googleLoginInfo = await this.userService.getGoogleLoginInfo(
         accessToken
       );
-      console.log(" googleLoginInfo = ", googleLoginInfo);
 
       let user = await this.userService.getUserByUsername(
         googleLoginInfo.email
       );
-      console.log("hi");
-      console.log(user);
 
       if (!user) {
         const role = "user";
         const role_id = Number(await this.userService.getRoleID(role));
-        user = await this.userService.register(
+        user = (await this.userService.register(
           googleLoginInfo.email,
           undefined,
           null,
           googleLoginInfo.email,
           role_id
-        );
+        ))[0];
       }
-      // if (req.session) {
-      //   req.session["user"] = user;
-      // }
+      console.log("Google Login user: ", user);
 
       const token = this.genJwt(user)
-      res.json({ token })
+      console.log("Google Login JWT: ", token);
+      return res.json({ token })
     } catch (error) {
       console.error(error);
-      res.status(500).json({
+      return res.status(500).json({
         message: "Google login fail",
       });
     }
@@ -196,8 +167,10 @@ export default class UserController {
       mobile_no: user.mobile_no,
     };
 
+    // console.log({ payload })
+
+
     const token = jwtSimple.encode(payload, jwt.jwtSecret);
-    console.log(token)
     return token
   }
 
@@ -207,16 +180,25 @@ export default class UserController {
     let body: EditProfile = req.body
     let {
       username,
-      password,
+      newPassword,
+      oldPassword,
+      reNewPassword,
       email,
       mobile,
     } = body
-    const userId = req.users?.userId
-    console.log(userId)
-
+    const userId = req['users']?.userId
+    console.log('userId = ', userId)
     try {
       if (!userId) {
         res.status(400).json({ message: "Invalid user id" })
+        return
+      }
+      if (newPassword === "123") {
+        res.status(400).json({ message: "Password is not secure" })
+        return
+      }
+      if (newPassword !== reNewPassword) {
+        res.status(400).json({ message: "Password mismatch" })
         return
       }
       const user: any = await this.userService.getUserById(userId);
@@ -224,53 +206,44 @@ export default class UserController {
         res.status(400).json({ message: "User not found" })
         return
       }
+      console.log({ oldPassword, newPassowrd: user.password })
+      let isMatched = await checkPassword(oldPassword, user.password);
+      console.log('mismatch : ', isMatched);
 
-      await this.userService.editProfile(
+      if (!isMatched) {
+        res.status(400).json({ message: "Invalid password" })
+        return
+      }
+
+
+      const hashedPassword = await hashPassword(reNewPassword);
+
+      let updatedUser = await this.userService.editProfile(
         {
           username,
-          password,
+          password: hashedPassword,
           email,
           mobile,
           id: userId
         }
       )
-      return res.json({ msg: "successful" })
+      console.log('updatedUser : ', updatedUser)
+      const token = this.genJwt(updatedUser)
+      res.json({ token })
     } catch (e) {
-      return res.status(400).json({ msg: e.message })
+      console.log(e)
+      res.status(400).json({ msg: e.message })
     }
 
-    //   if (user) {
-    //     user.name = req.body.name || user.name;
-    //     user.email = req.body.email || user.email;
-    //     user.mobile = req.body.mobile || user.mobile;
-    //     user.pic = req.body.pic || user.pic;
-
-    //     if (req.body.password) {
-    //       user.password = req.body.password;
-    //     }
-    //     const updateUser = await user.save()
-    //     res.json({
-    //       _id: updateUser._id,
-    //       name: updateUser.name,
-    //       email: updateUser.email,
-    //       mobile: updateUser.mobile,
-    //       pic: updateUser._id
-    //       // token: generateToken(updateUser._id)
-    //     });
-
-
-    //   }
-    //   else {
-    //     res.status(404);
-    //     throw new Error("User not found!")
-    //   }
   }
 
 }
 
 export interface EditProfile {
   username: string
-  password: string
+  newPassword: string
+  oldPassword: string,
+  reNewPassword: string,
   email: string
   mobile: string
   id: number

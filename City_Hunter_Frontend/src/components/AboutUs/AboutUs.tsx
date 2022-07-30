@@ -1,5 +1,4 @@
-import React from "react";
-import "./AboutUs.css";
+import "./AboutUs.scss";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Container } from "react-bootstrap";
@@ -19,13 +18,13 @@ function AboutUs() {
               <div className="title">Intelligent Online Lost & Found</div>
               <br></br>
               <div>
-                <a href="">City Hunter</a> is an entirely new intelligent lost
-                and found matching system. We have taken a different approach
-                than the traditional lost & founds by creating a multi-level
-                platform for businesses and individuals to submit lost or found
-                items into our matching system. Once the lost or found items are
-                submitted and placed into our matching system, we intelligently
-                help find and locate the misplaced goods and who has them.
+                City Hunter is an entirely new intelligent lost and found
+                matching system. We have taken a different approach than the
+                traditional lost & founds by creating a multi-level platform for
+                businesses and individuals to submit lost or found items into
+                our matching system. Once the lost or found items are submitted
+                and placed into our matching system, we intelligently help find
+                and locate the misplaced goods and who has them.
               </div>
             </Col>
           </Row>
@@ -35,8 +34,8 @@ function AboutUs() {
         <br></br>
 
         <Container>
-          <Row className="box-container">
-            <Col md={3} className="image-box">
+          <Row className="about-us_box-container">
+            <Col md={3} className="image-box-style">
               <div className="context-border">
                 <div className="img-container">
                   <img src={easeuse} alt="" />
@@ -54,7 +53,7 @@ function AboutUs() {
 
             <Col md={1}></Col>
 
-            <Col md={3} className="image-box">
+            <Col md={3} className="image-box-style">
               <div className="context-border">
                 <div className="img-container">
                   <img src={intelligentmatching} alt="" />
@@ -71,7 +70,7 @@ function AboutUs() {
 
             <Col md={1}></Col>
 
-            <Col md={3} className="image-box">
+            <Col md={3} className="image-box-style">
               <div className="context-border">
                 <div className="img-container">
                   <img src={outreach} alt="" />

@@ -23,3 +23,18 @@
   width: 70rem;
   height: 35rem;
 }
+.priceSize{
+  font-size: 12px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mapImage{
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}

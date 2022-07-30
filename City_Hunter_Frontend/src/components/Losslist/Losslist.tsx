@@ -1,60 +1,52 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./Losslist.scss";
 import "bootstrap/dist/css/bootstrap.css";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { Container } from "react-bootstrap";
-import background from "../../assets/background.jpeg";
 import { Link, Route, Routes, useParams } from "react-router-dom";
-import { getPostThunk } from "../../redux/post/thunks";
-import { IRootState } from "../../redux/state";
-import { IPostState } from "../../redux/post/state";
-// import * as All from "../assets/upload/";
+import React from "react";
+import ReactTimeAgo from "react-time-ago";
 
 interface LosslistProps {
   post: any;
 }
+
 export default function Losslist(props: LosslistProps) {
   const dispatch = useDispatch();
-  const name = useSelector((state: IRootState) => state.post?.posts[0]?.name);
-  // const posts = useSelector((state:IRootState)=> state.post?.posts);
 
-  useEffect(() => {
-    console.log("useEffect");
-    dispatch(getPostThunk("123"));
-    //   const getPost = async () => {
-    //     await dispatch(
-    //       getPost({
+  const a = "/main/ItemDetailPage/" + props.post.id;
+  const img =
+    process.env.REACT_APP_API_HOST + `/upload/${props.post.images_path}`;
+  // console.log(img);
 
-    //       })
-    //     )
-    //   }
-  }, []);
-
-  const itemsToRender = [];
-
-  const a = "/main/ItemDetailPage?id=" + props.post.id;
-  //   console.log(props.post.status_name);
+  const getAgo = (value: string): Date => {
+    return new Date(value);
+  };
   return (
     <div className="box-container">
       <div className="box itemdetailbox">
         <Link to={a}>
-          <div className="top-label">{props.post.status_name}</div>
-          <img
-            src="https://www.lostings.com/wp-content/uploads/2022/07/lost_starbucks_coffee_tumblr_collectors_items_starbucks_coffee_tumblr_692.jpg"
-            alt="Lost Starbucks Coffee Tumblr"
-          ></img>
+          <div className="top-label">
+            {props.post.status_name[0].toUpperCase() +
+              props.post.status_name.substring(1)}
+          </div>
+          <img src={img} alt=""></img>
 
           <div className="itemdetailcontext">
-            <b>Lost item:</b>
+            <b>Lost item :</b>&nbsp;
             {props.post.name}
           </div>
           <div className="itemdetailcontext">
-            <b>Location:</b> {props.post.lost_address}
+            <b>Districts :</b>&nbsp; {props.post.districts_name}
           </div>
           <div className="itemdetailcontext">
-            <b>Lost date:</b> {props.post.date}
+            <b>Lost date :</b>&nbsp; {props.post.date}
+          </div>
+          <div className="itemdetailcontext">
+            <b>Price :</b>&nbsp; HK$ {props.post.price}
+          </div>
+          <div style={{ fontSize: "17px" }}>
+            {props.post.date && (
+              <ReactTimeAgo date={getAgo(props.post.date)} locale="en-US" />
+            )}
           </div>
         </Link>
       </div>

@@ -1,8 +1,8 @@
 import Header from "../Header/Header";
-import "./Nearby.css";
+import "./minimap.css";
 import maptemplate from "../../assets/map-template.png";
 import { Col, Container, Row } from "react-bootstrap";
-import miniPlace from "./miniPlace"
+import Places from "../Nearby/place";
 import { useState, useMemo, useCallback, useRef } from "react";
 import {
   GoogleMap,
@@ -14,160 +14,125 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import miniDistancee from "./miniDistance";
-import { House } from "@mui/icons-material";
-import { getPostThunk } from "../../redux/post/thunks";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect} from "react";
-import Places from "../Nearby/place";
-
-
-//
-
-//
+import { useEffect } from "react";
+import { PostState } from "../../redux/post/state";
+import { useParams } from "react-router-dom";
 
 const containerStyle = {
-  width: '800px',
-  height: '800px'
-};
-
-const center = {
-  lat: 22.28656,
-  lng: 114.1507769
+  width: "600px",
+  height: "600px",
 };
 
 type LatLngLiteral = google.maps.LatLngLiteral;
-type DirectionsResult = google.maps.DirectionsResult;
-type MapOptions = google.maps.MapOptions;
 
-
-function MiniMap() {
+function Minimap() {
+  console.log("Minmap");
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    libraries: ['places'],
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!
-  })
+    id: "google-map-script",
+    libraries: ["places"],
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!,
+  });
+  console.log("isLoaded: " + isLoaded);
 
-  const [office, setOffice] = useState<LatLngLiteral>();
-  const [directions, setDirections] = useState<DirectionsResult>();
+  let { id } = useParams<{ id: string }>();
+  const minimapId = id ? parseInt(id) : 0;
+  const [post, setPost] = useState<PostState | null>();
+  const [center, setCenter] = useState<LatLngLiteral>({ lat: 0, lng: 0 });
   const mapRef = useRef<google.maps.Map>();
-  const [center, setCenter] = useState<LatLngLiteral>({ lat: 22.4, lng: 114 })
-  const [zoom, setZoom] = useState<number>(10)
-  const [mapLoaded, setMapLoaded] = useState(false)
-  const [windowShow, setWindowShow] = useState(false)
+  const [zoom, setZoom] = useState<number>(17);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [windowShow, setWindowShow] = useState(false);
 
-  const options = useMemo<MapOptions>(
-    () => ({
-      mapId: "b181cac70f27f5e6",
-      disableDefaultUI: true,
-      clickableIcons: false,
-    }),
-    []
+  const setTimeourAysnc = async () => {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        setTimeout(async () => {
+          const fetchPostItem = async () => {
+            const res = await fetch(
+              process.env.REACT_APP_API_HOST + `/post/${minimapId}`,
+              {}
+            );
+            const data = await res.json();
+            if (res.ok) {
+              setPost(data[0]);
+              console.log("data[0].latlngs_lat : ", data[0].latlngs_lat);
+              console.log("data[0].latlngs_lng : ", data[0].latlngs_lng);
+
+              setCenter({
+                lat: parseFloat(data[0].latlngs_lat),
+                lng: parseFloat(data[0].latlngs_lng),
+              });
+              setMapLoaded(true);
+            }
+            return null;
+          };
+          await fetchPostItem();
+          console.log(3);
+          resolve();
+        }, 1000);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  };
+
+  const onLoad = useCallback(
+    async (map: google.maps.Map) => {
+      console.log(1);
+      mapRef.current = map;
+      console.log(2);
+      await setTimeourAysnc();
+      console.log(4);
+    },
+    [setMapLoaded]
   );
-  const onLoad = useCallback((map: google.maps.Map) => { mapRef.current = map; setTimeout(() => setMapLoaded(true), 0) }, [setMapLoaded]);
-  const houses = useMemo(() => generateHouses(center), [center]);
 
-  // const fetchDirections = (house: LatLngLiteral) => {
-  //   if (!office) return;
-
-  //   const service = new DirectionsService();
-  //   service.route(
-  //     {
-  //       origin: house,
-  //       destination: office,
-  //       travelMode: google.maps.TravelMode.DRIVING,
-  //     },
-  //     (result, status) => {
-  //       if (status === "OK" && result) {
-  //         setDirections(result);
-  //       }
-  //     }
-  //   );
-  // };
-
+  const genGoogleMap = useMemo(() => {
+    return (
+      <div>
+        <GoogleMap
+          id="marker-example"
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={zoom}
+          onLoad={onLoad}
+          onCenterChanged={() =>
+            console.log(JSON.stringify(mapRef.current?.getCenter()))
+          }
+        >
+          {mapLoaded && (
+            <Marker onClick={() => setWindowShow(true)} position={center} />
+          )}
+          {windowShow && (
+            <InfoWindow position={center}>
+              <div
+                style={{
+                  background: `white`,
+                  border: `1px solid #ccc`,
+                  padding: 10,
+                }}
+              >
+                <div>InfoWindow</div>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      </div>
+    );
+  }, [post, center, isLoaded]);
   return (
     <div className="nearby">
-      <h1>Nearby</h1>
-      {isLoaded && <Places setOffice={(position: google.maps.LatLngLiteral) => {
-        setCenter(position)
-        setZoom(17)
-      }} />}
-      <Container>
-        <Row>
-          <Col>
-            <div className="map-area">
-              {
-                isLoaded && <GoogleMap
-                  id="marker-example"
-                  mapContainerStyle={containerStyle}
-                  center={center}
-                  zoom={zoom}
-                  onLoad={onLoad}
-                  onCenterChanged={() => console.log(JSON.stringify(mapRef.current?.getCenter()))}
-                // onUnmount={onUnmount}
-                >
-                  {mapLoaded && <Marker onClick={() => setWindowShow(true)} position={center} onLoad={() => console.log('noooopoooo')} />}
-                  {windowShow && <InfoWindow position={center}>
-                    <div style={{
-                      background: `white`,
-                      border: `1px solid #ccc`,
-                      padding: 15
-                    }}>
-                      <h1>InfoWindow</h1>
-                    </div>
-                  </InfoWindow>}
-                </GoogleMap>
-              }
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      {isLoaded && (
+        <Container>
+          <Row>
+            <Col>
+              <div className="map-area">{isLoaded && genGoogleMap}</div>
+            </Col>
+          </Row>
+        </Container>
+      )}
     </div>
   );
 }
-
-const defaultOptions = {
-  strokeOpacity: 0.5,
-  strokeWeight: 2,
-  clickable: false,
-  draggable: false,
-  editable: false,
-  visible: true,
-};
-const closeOptions = {
-  ...defaultOptions,
-  zIndex: 3,
-  fillOpacity: 0.05,
-  strokeColor: "#8BC34A",
-  fillColor: "#8BC34A",
-};
-const middleOptions = {
-  ...defaultOptions,
-  zIndex: 2,
-  fillOpacity: 0.05,
-  strokeColor: "#FBC02D",
-  fillColor: "#FBC02D",
-};
-const farOptions = {
-  ...defaultOptions,
-  zIndex: 1,
-  fillOpacity: 0.05,
-  strokeColor: "#FF5252",
-  fillColor: "#FF5252",
-};
-
-const generateHouses = (position: LatLngLiteral) => {
-  const _houses: Array<LatLngLiteral> = [];
-  for (let i = 0; i < 100; i++) {
-    const direction = Math.random() < 0.5 ? -2 : 2;
-    _houses.push({
-      lat: position.lat + Math.random() / direction,
-      lng: position.lng + Math.random() / direction,
-    });
-  }
-  return _houses;
-};
-
-
-
-export default MiniMap;
+export default Minimap;

@@ -1,6 +1,5 @@
 import { Knex } from "knex";
 import fetch from "cross-fetch";
-import { EditProfile } from "../controller/userController";
 
 export class UserService {
   constructor(private knex: Knex) { }
@@ -43,7 +42,9 @@ export class UserService {
   }
 
   public async getUserById(currentUserId: number) {
-    let userResult = await this.knex("users").where("id", currentUserId);
+    console.log('getUserby id : ', currentUserId)
+    let userResult = await this.knex("users").where("id", currentUserId).first();
+    console.log('userResult = ', userResult)
     return userResult;
   }
 
@@ -69,11 +70,12 @@ export class UserService {
   }
 
   // To generate a new profile interface without "id"
-  public async editProfile(profile: EditProfile) {
+  public async editProfile(profile: any) {
     let { id, ...updateProfile } = profile
 
-    console.log(updateProfile)
-    await this.knex('users').where({ id }).update(updateProfile)
+    let result = await this.knex('users').where({ id }).update(updateProfile).returning('*')
+    console.log({ result })
+    return result
   }
 
 }

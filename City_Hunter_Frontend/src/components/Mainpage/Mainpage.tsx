@@ -10,8 +10,8 @@ function Mainpage() {
     <div>
       <div>
         <Header />
-        <div className="app_side">
-          <div className="app_body">
+        <div className="">
+          <div className="">
             {/* <Sidebar /> */}
             <Outlet />
           </div>

@@ -1,0 +1,25 @@
+.outer-container {
+  display: flex;
+}
+
+.lostmap {
+  padding-left: 200px;
+}
+
+.success {
+  color: rgb(241, 15, 155);
+  margin-top: 3px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+// .dateCalendar {
+//   display: none !important;
+// }
+
+.error {
+  color: #fff;
+  font-size: 22px;
+  background-color: red;
+  text-align: center;
+}

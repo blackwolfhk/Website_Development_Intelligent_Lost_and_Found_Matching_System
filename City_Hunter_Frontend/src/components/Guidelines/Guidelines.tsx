@@ -1,9 +1,9 @@
-import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "./Guidelines.css";
 import lostitem from "../../assets/lostitem.png";
 import formfilling from "../../assets/formfilling.png";
 import lostandfound from "../../assets/lostandfound.png";
+import { Link } from "react-router-dom";
 
 function Guidelines() {
   return (
@@ -57,8 +57,8 @@ function Guidelines() {
                 verify ownership of the item.
               </p>
               <p>
-                To be reunited with your item you must{" "}
-                <a href="">register your item lost</a> by via the online form.
+                To be reunited with your item you must register your item lost
+                by via the online form.
               </p>
             </Col>
           </Row>
@@ -72,8 +72,8 @@ function Guidelines() {
                 Please provide us with as much detail as you can to help
                 identify your item from the thousands of similar items lost on
                 transport networks daily. Providing as detailed a description as
-                possible when <a href="">registering your item lost</a> will
-                help Lost Property Officers identify, and match, your item.
+                possible when registering your item lost will help Lost Property
+                Officers identify, and match, your item.
               </p>
               <p>
                 <b className="guideline-white-font">Bags / Suitcases</b> -
@@ -149,12 +149,14 @@ function Guidelines() {
                 <br></br>
 
                 <div className="feature-buttons">
-                  <div className="guideline-from-submission">
+                  {/* <div className="guideline-from-submission">
                     <button>Submit Found Item</button>
-                  </div>
+                  </div> */}
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <div className="guideline-from-submission">
-                    <button>Submit Lost Item</button>
+                    <button>
+                      <Link to="/main/createlostpost">Create Lost Post</Link>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -45,9 +45,9 @@ export async function up(knex: Knex): Promise<void> {
             table.text("lost_address");
             table.string("lost_time");
             table.string("date");
-            table.text("price");
-            table.integer("type_id").unsigned().notNullable();
-            table.foreign("type_id").references("object_types.id");
+            table.integer("price");
+            // table.integer("type_id").unsigned().notNullable();
+            // table.foreign("type_id").references("object_types.id");
             table.integer("status_id").unsigned().notNullable();
             table.foreign("status_id").references("status.id");
             table.integer("user_id").unsigned().notNullable();

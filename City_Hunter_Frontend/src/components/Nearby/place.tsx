@@ -35,11 +35,6 @@ export default function Places({ setOffice }: PlacesProps) {
     setOffice({ lat, lng });
   };
 
-  useEffect(() => {
-    console.log("useEffect");
-    // console.log(suggestions)
-  }, []);
-
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
@@ -49,7 +44,7 @@ export default function Places({ setOffice }: PlacesProps) {
         }
         disabled={!ready}
         className="combobox-input"
-        placeholder="Search office address"
+        placeholder="Search Lost Address"
       />
       <ComboboxPopover>
         <ComboboxList>

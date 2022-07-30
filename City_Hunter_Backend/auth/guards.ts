@@ -8,9 +8,12 @@ const permit = new Bearer({
     query: "access_token"
 })
 
+
+
 export async function isLoggedIn(req: Request, res: Response, next: NextFunction) {
     try {
         const token = permit.check(req)
+        console.log({ token })
 
         if (!token) {
             return res.status(401).json({ msg: "No Token" })
@@ -19,12 +22,13 @@ export async function isLoggedIn(req: Request, res: Response, next: NextFunction
         const payload = jwtSimple.decode(token, jwt.jwtSecret);
         const userId = payload.userId
         const user = (await knex.table("users").where("id", userId))[0]
+        console.log({ payload })
+        console.log({ userId })
+        console.log({ user })
 
-        console.log(token)
-        console.log(payload)
 
         if (!user) {
-            return res.status(401).json({ msg: "Permission Denied" });
+            return res.status(401).json({ msg: "Permission Denied, User does not exist" });
         }
 
         req.users = {
@@ -35,6 +39,7 @@ export async function isLoggedIn(req: Request, res: Response, next: NextFunction
         return next()
 
     } catch (e) {
+        console.error(e.message)
         return res.status(401).json({ msg: e.message });
     }
 }

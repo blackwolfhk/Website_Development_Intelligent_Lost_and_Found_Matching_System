@@ -15,13 +15,15 @@ import { UserRoutes, userRoutes } from "./routes/userRoutes";
 
 import { Request, Response } from "express";
 import IncomingForm from 'formidable/Formidable'
-import formidable, { Options } from "formidable";
-
+import formidable, { Options, Files, File } from "formidable";
+import fs from 'fs'
 export let app = express();
 app.use(cors());
 
 // server handling request from json data
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/upload', express.static('upload'))
 // post setting
 app.use(postRoutes);
@@ -45,19 +47,44 @@ declare global {
     }
 }
 
-export const initFormidable = (): IncomingForm => {
+export const initFormidable = (uploadDir: string = ""): IncomingForm => {
     let param: Partial<Options> = {
         keepExtensions: true,
         maxFiles: 1,
-        maxFileSize: 200 * 1024 ** 2, // the default limit is 200KB
+        maxFileSize: 2000 * 1024 ** 2, // the default limit is 200KB
         filter: (part) => {
             console.log(part)
-            return part.mimetype?.startsWith('text/csv') || false
+            return part.mimetype?.startsWith('image') || false
         },
     }
     const form = new formidable.IncomingForm(param)
+
+    if (uploadDir) {
+        fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir, { recursive: true })
+        param.uploadDir = uploadDir
+    }
     return form
 }
+
+export const uploadFormidable = async (uploadDir: string, files: Files) => {
+    if (uploadDir) {
+        fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir, { recursive: true })
+    }
+    let file: File = Array.isArray(files.image) ? files.image[0] : files.image
+    let image = file ? file.newFilename : undefined
+
+    const old = file.filepath
+    const newPath = `${uploadDir}/${file.newFilename}`
+    if (image) {
+        fs.renameSync(old, newPath)
+    }
+
+    return file.newFilename
+}
+
+app.get("/test", (req: Request, res: Response) => {
+    res.json({ msg: "CICD 12345" })
+})
 
 app.get("/fail", (req: Request, res: Response) => {
     res.send("Failed attempt");
@@ -74,6 +101,6 @@ const PORT = 8080;
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`)
-    console.log(`Node ENV - ${process.env.NODE_ENV}`)
-    console.log(`POSTGRES_HOST - ${process.env.POSTGRES_HOST}`)
+    // console.log(`Node ENV - ${process.env.NODE_ENV}`)
+    // console.log(`POSTGRES_HOST - ${process.env.POSTGRES_HOST}`)
 })

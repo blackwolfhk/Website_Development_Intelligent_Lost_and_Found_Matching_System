@@ -1,6 +1,7 @@
-docker exec -it 0f3ab27c26f6 /bin/sh
+docker exec -it 796f4e367091 /bin/sh
+yarn knex seed:run
 
-docker build -t node-server .
+docker build -t city_hunter .
 docker tag city_hunter:latest veronica528/city-hunter:latest
 
 <!-- docker push image -->
@@ -19,7 +20,7 @@ scp /Users/kelvin_cheung/Documents/Tecky_Academy/city_hunter_backend/.env.docker
 
 <!-- docker pull -->
 
-docker pull jamesteckyio/c20-backend:latest
+docker pull veronica528/city-hunter:latest
 
 docker login
 veronica528

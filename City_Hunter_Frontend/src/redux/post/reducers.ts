@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { IPostState } from "../post/state"  
+import { IPostState } from "../post/state"
 import { getPostThunk } from "./thunks";
 import { MyJwtPayload } from "../auth/state";
 
@@ -9,15 +9,12 @@ const initialPost: IPostState = {
 
 const postReducer = createReducer(initialPost, (build) => {
     //success get post handling:
-    build.addCase(getPostThunk.fulfilled,(state: IPostState, action) => {
+    build.addCase(getPostThunk.fulfilled, (state: IPostState, action) => {
         state.posts = action.payload
-        // console.log(action.payload);
-        
-        // getPost(state,action)
     })
     //fail get post handling:
     build.addCase(getPostThunk.rejected, (state: IPostState, action) => {
-        getPost(state,action)
+        getPost(state, action)
     })
 })
 

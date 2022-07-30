@@ -8,12 +8,6 @@ let student: Student = {
     password: "i love james"
 }
 
-// let { password, ...studentWithoutPw } = student
-// studentWithoutPw.name = 'Ben'
-// console.log('student = ', student)
-
-// console.log('password = ', password);
-// console.log('studentWithoutPw = ', studentWithoutPw);
 
 interface Student {
     name: string
@@ -36,10 +30,6 @@ function updateProfile(profile: Student) {
 
     delete filteredProfile.password
 
-
-    console.log({ profile })
-    console.log({ filteredProfile })
-    console.log({ student })
 
 
 }
